@@ -1,0 +1,33 @@
+=====================================================
+Cross Domain Iframe Communication: 
+=====================================================
+
+A simple set of codes gathered from around the web to have some cross-domain
+communication through iframes!
+
+The basic idea is to include some media seemlessly from another foreign 
+location, possibly another domain
+
+The example given here is to embed a resource derived from another port. The 
+is enough to trigger cross-domain security restrictions and demonstrate the 
+communication method: dom message and polling
+
+
+Quickstart
+==========
+
+1) launch the server
+
+  ./static.py
+
+This will launch two web servers on your local interface, each running ports 
+8888 and 8889 respectively. In order to kill the `./static.py` process, you'll
+have to send it something like a SIGTERM (ctrl-|) or SIGKILL. 
+
+2) Browse to http://localhost:8888/local_document.html
+
+This will load an iframe from the "foreign" port 8889 server and display the
+resize the iframe viewport based on content size. 
+
+Note: this method depends on the 'foreign' html content to consist entirely of
+block level elements. So any <span>s and <p> tags must be wrapped in blocks.

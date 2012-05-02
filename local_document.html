@@ -1,0 +1,48 @@
+<!DOCTYPE html>  
+<html lang="en">  
+  <head>
+     
+    <meta charset="utf-8" />  
+    <title>IFrame Communication</title>  
+    <script type="application/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <style>
+      #content-area{
+        width:800px;
+        margin-right:auto;
+        margin-left:auto;
+      }
+      #external-content{
+        float:right;
+      }
+    </style>
+  </head>  
+   
+  <body>
+    <div id="content-area">
+      <h2>Example</h2>
+
+<p>The basic idea is to include some media seemlessly from another foreign location, possibly another domain</p>
+<p>The example given here is to embed a resource derived from another port. The is enough to trigger cross-domain security restrictions and demonstrate the communication method</p>
+
+<div id="external-content">
+  <noscript><h2>Please enable javascript to see this example<h2></noscript>
+  <div id="append-here">
+  </div>
+</div>
+
+<script type="text/javascript" src="external_embed_script.js"></script>
+<script type="text/javascript">
+  // pass in the url that forms the src of the iframe and the id of the element
+  // where the iframe will be appended
+  embedDataOutput('http://localhost:8889/foreign_content.html#foo', 'append-here');
+</script>
+
+<p>Maecenas volutpat vulputate luctus. Curabitur elementum ultrices mi sit amet porta. Proin et velit ut felis malesuada ultricies. Nulla a ante sit amet lacus dignissim porta eget eget nibh. Praesent ante magna, viverra quis mattis ac, rhoncus in justo. Donec ac magna quam. Vestibulum venenatis aliquam quam eget vehicula. Curabitur laoreet lobortis ipsum, eu mattis orci volutpat vel. Suspendisse potenti. Quisque non purus libero, at malesuada sapien. Pellentesque nulla risus, rhoncus euismod vestibulum nec, tristique eget diam. Morbi suscipit porttitor quam et egestas. Vestibulum pretium arcu eu sapien porta volutpat. Nulla sit amet cursus lacus.</p>
+<p>Morbi posuere elit eu orci malesuada vel dignissim nisl eleifend. Pellentesque ut neque justo, porta pellentesque nunc. In condimentum suscipit enim, a porttitor purus blandit sed. Vestibulum porta viverra tortor, in molestie justo sodales vitae. Morbi hendrerit velit id ipsum ultricies sagittis. Maecenas velit lectus, feugiat eget ultrices in, feugiat at arcu. Donec nisi felis, convallis in malesuada eu, tristique eu tellus. Nulla tincidunt accumsan ante, non dictum tellus hendrerit ut. Aenean consectetur purus eu purus ultricies congue. Curabitur id tincidunt tortor. Vivamus sed lectus non neque dignissim luctus vitae ullamcorper sem. Sed et lacus tellus. Ut volutpat est sed elit laoreet sed ornare magna blandit. Sed scelerisque dolor at tortor posuere cursus. Aenean vulputate euismod quam, vel pretium lorem elementum nec. Nunc bibendum, risus a fringilla elementum, dolor ligula fringilla sapien, a auctor diam mauris a urna. Nulla vel elit eros. Ut posuere dolor nibh.</p>
+
+
+    </div>
+     
+  </body>
+   
+</html>
