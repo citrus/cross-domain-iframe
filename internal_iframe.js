@@ -1,5 +1,6 @@
 /* functions utilized by the embedding iframe */
 
+
 function getSize(){
 
   var w = $(document).width(); 
@@ -7,15 +8,44 @@ function getSize(){
   return {
           width: w,
           height:h
+  };
+}
+
+/* queue the last received message,
+ * respond to it when ready (callback sendSizeResponse), 
+ * or queue up a response function before any message
+ */
+
+var incomingMessage = null;
+var respondFunction = null;
+
+function sendSizeResponse(){
+  if(incomingMessage == null){
+    // wait for later message
+    respondFunction = sendSizeResponse;
+    return;
   }
+  var size = getSize();
+  size.destId = incomingMessage.data;
+  incomingMessage.source.postMessage(JSON.stringify(size), incomingMessage.origin);
 }
 
 function receiveSizeRequest(event){
-  console.log('Inner: recieved communication!');
-  var size = getSize();
-  size.destId = event.data;
-  event.source.postMessage(JSON.stringify(size), event.origin);
+  // queue the last recieved message
+  incomingMessage = event;
+  if(respondFunction)
+    respondFunction();
 }
+
+/* **************************************************************************
+ * For this example the iframe is ready immediately, we have no callback
+ * so prime the response :
+ * **************************************************************************
+  */
+
+respondFunction = sendSizeResponse;
+
+/****************************************************************************/
 
 try{
     window.addEventListener("message",receiveSizeRequest, false);
