@@ -244,7 +244,7 @@ def test():
         server_2.start()
 
         print ""
-        print "Point your browser at http://localhost:8888/local_document.html"
+        print "Point your browser at http://localhost:8888/index.html"
         server_1.join()
         server_2.join()
         
