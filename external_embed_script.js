@@ -31,8 +31,7 @@ function embedDataOutput(url, id){
     arguments.callee.done = true;
 
     // do your thing
-    var el = document.getElementById(id);
-    var parentEl = el.parentNode;
+    var parentEl = document.getElementById(id);
 
     var frame = document.createElement('iframe');
     var frameId = id + "-iframe";
@@ -48,7 +47,7 @@ function embedDataOutput(url, id){
       /* build the iframe set the correct size:
        *
        * There are two possible ways to recieve a message from the foreign
-       * iframe. First, we can simple trigger a cross domain message event, 
+       * iframe. First, we can simply trigger a cross domain message event, 
        * secondly we can set the hash fragment on the foreign iframe and poll
        *
        * */
@@ -107,37 +106,13 @@ function embedDataOutput(url, id){
     }
 
     // Here we go!
-    parentEl.insertBefore(frame, el);
+    parentEl.appendChild(frame);
 
   } //end init
-
-  /* http://dean.edwards.name/weblog/2006/06/again/ 
-   * Dean Edwards/Matthias Miller/John Resig @byron
-   * TODO: build an init queue
-   *
-   * run the init code after the DOM is fully loaded; cross browser.
-   *
-   * */
-
-  if (document.addEventListener) {
-    document.addEventListener('DOMContentLoaded', init, false);
-  }
-  (function() {
-    /*@cc_on
-    try {
-      document.body.doScroll('up');
-      return init();
-    } catch(e) {}
-    /*@if (false) @*/
-    if (/loaded|complete/.test(document.readyState)) return init();
-    /*@end @*/
-    if (!init.done) setTimeout(arguments.callee, 30);
-  })();
-
-  if (window.addEventListener) {
-    window.addEventListener('load', init, false);
-  } else if (window.attachEvent) {
-    window.attachEvent('onload', init);
-  }
+  
+  // start loading the iframe immediately 
+  // ensure the target dom el comes before this script
+  // otherwise, call init() when the DOM is ready
+  init();
 }
 
