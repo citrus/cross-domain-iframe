@@ -22,9 +22,9 @@ function getTargetOrigin(url){
  */
 function embedDataOutput(url, id){
 
-  targetOrigin = getTargetOrigin(url);
+  var targetOrigin = getTargetOrigin(url);
   // we reserve the hash for communication
-  frameSrc = url.replace(/#.*/,'');
+  var frameSrc = url.replace(/#.*/,'');
 
   function init() {
     if (arguments.callee.done) return;
@@ -55,10 +55,22 @@ function embedDataOutput(url, id){
       function receiveMessage(event){
         // recieve a message event and set the size of the iframe
 
-        if (event.origin !== targetOrigin){
+        // strip trailing slashes
+        var remoteOrigin = event.origin.replace(/\/$/, '')
+        var localOrigin = targetOrigin.replace(/\/$/, '')
+
+        if (remoteOrigin !== localOrigin){
           return
         }
-        var data = JSON.parse(event.data);
+
+        var data = null;
+        if(this['JSON']){
+          data = JSON.parse(event.data);
+        }
+        else{
+          data = eval(event.data);
+        }
+
         if (data.destId !== frameId){
           return
         }
@@ -84,10 +96,16 @@ function embedDataOutput(url, id){
       }
 
       try{
-        window.addEventListener("message", receiveMessage, false);
+        if(window.attachEvent){
+          window.attachEvent("onmessage", receiveMessage);
+        }
+        else{
+          window.addEventListener("message", receiveMessage, false);
+        }
       }
       catch(e){
         // start polling!
+        throw('AAA!')
         pollMessage();
       }
       finally{

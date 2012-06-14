@@ -27,7 +27,15 @@ function sendSizeResponse(){
   }
   var size = getSize();
   size.destId = incomingMessage.data;
-  incomingMessage.source.postMessage(JSON.stringify(size), incomingMessage.origin);
+
+  var payload = null
+  if(this['JSON'])
+    payload = JSON.stringify(size);
+  else{
+    // IE<8, le sigh
+    payload = '{"width":'+ size.width +',"height":'+ size.height +'}';
+  }
+  incomingMessage.source.postMessage(payload, incomingMessage.origin);
 }
 
 function receiveSizeRequest(event){
@@ -48,7 +56,12 @@ respondFunction = sendSizeResponse;
 /****************************************************************************/
 
 try{
-    window.addEventListener("message",receiveSizeRequest, false);
+   if(window.attachEvent){
+     window.attachEvent("onmessage", receiveSizeRequest);
+   }
+   else{
+     window.addEventListener("message",receiveSizeRequest, false);
+   }
 }
 catch(e){
   // assume that the window lacks this support, IE8 and less?
@@ -56,4 +69,4 @@ catch(e){
     var size = getSize();
     window.location.hash = size.width + "-" + size.height;
   });
-}
+};
