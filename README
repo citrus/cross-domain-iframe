@@ -22,8 +22,8 @@ have to send it something like a SIGTERM (ctrl-|) or SIGKILL.
 
 2) Browse to http://localhost:8888/index.html
 
-This will load an iframe from the "foreign" port 8889 server and display the
-resize the iframe viewport based on content size. 
+This will load content from the "foreign" server and display it in an iframe. 
+The iframe will resize itself to fit the dynamic content.
 
 Note: this method depends on the 'foreign' html content to consist entirely of
 block level elements. So any <span>s and <p> tags must be wrapped in blocks.
